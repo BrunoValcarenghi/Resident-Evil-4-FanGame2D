@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_facada",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_facada",
+  "parent":{
+    "name":"player_script",
+    "path":"folders/script/player_script.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -4,6 +4,8 @@ function shoot(){
 		
 		audio_random(sfx_shoot)
 		
+		if image_index != 2 image_index = 2
+		
 		//tempo
 		can_shoot = false;
 		alarm[0] = shoot_time;

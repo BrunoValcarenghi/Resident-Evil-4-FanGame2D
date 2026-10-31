@@ -1,22 +1,25 @@
 get_input()
 
-if key_aim state = 2
-else if hsp != 0 or vsp != 0 state = 1
-else state = 0
-
 player_sprite()
 
 switch state{
 	
 	case 1:
+		controle_status()
 		move_col()
 		break;
 		
 	case 2:
+		controle_status()
 		shoot()
 		break;
 		
+	case 3:
+		facada()
+		break;
+		
 	default:
+		controle_status()
 		move_col()
 		break;
 

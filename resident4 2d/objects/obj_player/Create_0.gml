@@ -34,6 +34,20 @@ dir = [0, 0]
 // 0 = idle
 // 1 = walk
 // 2 = aim
+// 3 = knife
+
+controle_status = function(){
+	
+	//aim idle e walk
+	if key_aim state = 2
+	else if hsp != 0 or vsp != 0 state = 1
+	else state = 0
+	
+	//facada
+	if state = 2 and key_melee state = 3
+
+}
+
 state = 0
 
 sprites = [
@@ -61,5 +75,13 @@ sprites = [
 		spr_player_pistol_aim_s, 
 		spr_player_pistol_aim_st, 
 		spr_player_pistol_aim_t
+	],
+	//knife
+	[
+		spr_player_pistol_knife_d, 
+		spr_player_pistol_knife_sd, 
+		spr_player_pistol_knife_s, 
+		spr_player_pistol_knife_st, 
+		spr_player_pistol_knife_t
 	],
 ]

@@ -10,6 +10,7 @@ key_right = keyboard_check(ord("D"))
 
 key_aim = mouse_check_button(mb_right)
 key_shoot = mouse_check_button(mb_left)
+key_melee = keyboard_check(vk_space)
 
 key_sprint = keyboard_check(vk_control)
 

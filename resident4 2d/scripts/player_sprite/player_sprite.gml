@@ -1,6 +1,7 @@
 function player_sprite(){
 	
 	if state = 2 dir_mouse()
+	else if state = 3 {if image_index <= 3 dir_mouse()}
 	else dir_movimento()
 	
 	if dir[1] = 0 image_xscale = 1
@@ -35,8 +36,11 @@ function dir_movimento(){
 
 function dir_mouse(){
 	
-	if (!array_contains(sprites[2], sprite_index)) image_index = 0
-	if image_index >= 1.8 image_index = 2
+	if state = 2{
+		if (!array_contains(sprites[2], sprite_index)) image_index = 0
+		if image_index >= 1.8 image_index = 2
+	}
+	if (!array_contains(sprites[3], sprite_index) and state = 3) image_index = 0
 	
 	var _mouse_dir = point_direction(x, y, obj_cursor.x, obj_cursor.y)
 	
