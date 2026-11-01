@@ -67,8 +67,9 @@ function seleciona_itens(){
 	}
 	
 	if keyboard_check_pressed(vk_escape) {
-	
-		if select_item != noone select_item = noone
+		if select_item != noone {
+			select_item = noone
+		}
 	
 	}
 
@@ -194,7 +195,15 @@ function draw_move_item(){
 			draw_set_colour(c_red)
 		
 		}
-	
+		
+		if keyboard_check_pressed(vk_escape) {
+			add_inventario_item(move, [old_x, old_y])
+			move = noone
+			cursor[0] = old_x
+			cursor[1] = old_y
+			exit
+		}
+		
 		draw_set_alpha(.3)
 		draw_rectangle(
 			cursor[0]*distance + ow, 
@@ -289,6 +298,9 @@ function move_cursor_2(){
 
 function move_cursor(){
 
+	var _ow = cursor[0]
+	var _oh = cursor[1]
+
 	if keyboard_check_pressed(vk_left) or keyboard_check_pressed(ord("A")){
 	
 		if cursor[0] > 0 {
@@ -319,7 +331,9 @@ function move_cursor(){
 			and global.inventory[cursor[0]+1][cursor[1]].xx = cursor[0]{
 				
 				cursor[0]++
-				while(is_struct(global.inventory[cursor[0]][cursor[1]])) {
+				while(is_struct(global.inventory[cursor[0]][cursor[1]])) 
+				and global.inventory[cursor[0]][cursor[1]].xx = _ow
+				and global.inventory[cursor[0]][cursor[1]].yy = _oh{
 					
 					cursor[0]++
 					if cursor[0] = size[0] cursor[0] = 0
@@ -369,7 +383,9 @@ function move_cursor(){
 			and global.inventory[cursor[0]][cursor[1]+1].yy = cursor[1]{
 				
 				cursor[1]++
-				while(is_struct(global.inventory[cursor[0]][cursor[1]])) {
+				while is_struct(global.inventory[cursor[0]][cursor[1]])
+				and global.inventory[cursor[0]][cursor[1]].xx = _ow
+				and global.inventory[cursor[0]][cursor[1]].yy = _oh{
 					
 					cursor[1]++
 					if cursor[1] = size[1] cursor[1] = 0
