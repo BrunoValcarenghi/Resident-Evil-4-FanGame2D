@@ -59,7 +59,10 @@ function draw_grid(){
 
 function seleciona_itens(){
 
-	if keyboard_check_pressed(vk_enter) and move = noone{
+	if keyboard_check_pressed(vk_enter) 
+	and move = noone
+	and combine = noone
+	and global.inventory[cursor[0]][cursor[1]] != 0{
 	
 		if select_item = noone and global.inventory[cursor[0]][cursor[1]] != 0 {
 			
@@ -119,7 +122,19 @@ function draw_select_item(){
 
 }
 
-//parei aqui
+function remove_item(item){
+
+	var _item = global.itens[item]
+	
+	for(var i = old_x; i < old_x + _item.size[0]; i++){
+		for(var j = old_y; j < old_y + _item.size[1]; j++){
+			global.inventory[i][j] = 0
+		}
+	}
+
+}
+
+//falta coisa aqui
 function item_options(){
 
 	switch global.itens[select_item].options[option]{
@@ -134,14 +149,8 @@ function item_options(){
 				old_y = cursor[1]
 				
 				//global.inventory[cursor[0]][cursor[1]] = 0
-				
-				var _size = global.itens[move]
 	
-				for(var i = old_x; i < old_x + _size.size[0]; i++){
-					for(var j = old_y; j < old_y + _size.size[1]; j++){
-						global.inventory[i][j] = 0
-					}
-				}
+				remove_item(move)
 			
 			break;
 		
@@ -154,7 +163,16 @@ function item_options(){
 			break;
 		
 		case "Combine": 
-			show_message("3")
+			
+			io_clear()
+			
+			combine  = global.inventory[cursor[0]][cursor[1]]
+			
+			old_x = cursor[0]
+			old_y = cursor[1]
+			
+			remove_item(combine)
+			
 			break;
 		
 		case "Examine": 
@@ -171,7 +189,6 @@ function item_options(){
 
 }
 
-//parei aqui
 function move_item(){
 
 	if move != noone {
@@ -222,11 +239,72 @@ function move_item(){
 	
 }
 
+function combine_item(){
+
+	if combine != noone {
+		
+		draw_set_alpha(.3)
+		draw_rectangle(
+			cursor[0]*distance + ow - 1,
+			cursor[1]*distance + oh - 1, 
+			cursor[0]*distance + ow + global.itens[combine].size[0]*distance - 2, 
+			cursor[1]*distance + oh + global.itens[combine].size[1]*distance - 2, 
+			0
+		)
+		draw_set_alpha(1)
+		draw_sprite(global.itens[combine].spr, 0, cursor[0]*distance + ow -3, cursor[1]*distance + oh - 15)
+	
+		var _ocupado = false
+		for(var i = cursor[0]; i < cursor[0] + global.itens[combine].size[0]; i++){
+			for(var j = cursor[1]; j < cursor[1] + global.itens[combine].size[1]; j++){
+				if global.inventory[i][j] != 0 _ocupado = true
+			}
+		}
+		
+		if variable_struct_exists(global.itens[combine], "herb"){
+		
+			if _ocupado and !is_struct(global.inventory[cursor[0], cursor[1]]) and variable_struct_exists(global.itens[global.inventory[cursor[0], cursor[1]]], "herb"){
+			
+				if keyboard_check_pressed(vk_enter) {
+					
+					var m1 = global.itens[combine].herb
+					var m2 = global.itens[global.inventory[cursor[0], cursor[1]]].herb
+					
+					show_message(m1)
+					show_message(m2)
+					
+					add_inventario_item(7, [cursor[0], cursor[1]])
+					combine = noone
+					exit;
+				}
+				draw_set_colour(c_green)
+		
+			}
+			else{
+		
+				draw_set_colour(c_red)
+		
+			}
+			
+		}
+		
+		if keyboard_check_pressed(vk_escape) {
+			add_inventario_item(combine, [old_x, old_y])
+			combine = noone
+			cursor[0] = old_x
+			cursor[1] = old_y
+			exit
+		}
+		
+	}
+	
+}
+
 function desenha_cursor(){
 	
 	if move = noone{
 	
-		draw_set_colour(c_yellow)
+		if !move and !combine draw_set_colour(c_yellow)
 		if (cursor[0] = i and cursor[1] = j)
 		or is_struct(_slot) and (_slot.xx = cursor[0] and _slot.yy = cursor[1]){
 			draw_set_alpha(.1)
@@ -270,7 +348,10 @@ function add_inventario_item(_item, _slot){
 }
 
 function move_cursor_2(){
-
+	
+	var _slot = move
+	if combine != noone _slot = combine
+	
 	if keyboard_check_pressed(vk_left) or keyboard_check_pressed(ord("A")){
 	
 		if cursor[0] > 0 cursor[0]--
@@ -278,7 +359,7 @@ function move_cursor_2(){
 	}
 	if keyboard_check_pressed(vk_right) or keyboard_check_pressed(ord("D")){
 		
-		if cursor[0] + global.itens[move].size[0] < size[0]{
+		if cursor[0] + global.itens[_slot].size[0] < size[0]{
 			if cursor[0] < size[0]-1 cursor[0]++
 			else if cursor[0] = size[0]-1 cursor[0] = 0
 		}
@@ -291,7 +372,7 @@ function move_cursor_2(){
 	}
 	if keyboard_check_pressed(vk_down) or keyboard_check_pressed(ord("S")){
 		
-		if cursor[1] + global.itens[move].size[1] < size[1]{
+		if cursor[1] + global.itens[_slot].size[1] < size[1]{
 			if cursor[1] < size[1]-1 cursor[1]++
 			else if cursor[1] = size[1]-1 cursor[1] = 0
 		}

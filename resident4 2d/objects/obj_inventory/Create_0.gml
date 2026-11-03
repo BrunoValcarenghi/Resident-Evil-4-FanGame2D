@@ -12,6 +12,8 @@ cursor_y = 0
 
 select_item = noone
 move = noone
+combine = noone
+
 
 zerar_inventario()
 
