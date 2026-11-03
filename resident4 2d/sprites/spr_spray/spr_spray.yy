@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"inventario",
-    "path":"folders/sprites/inventario.yy",
+    "name":"cura",
+    "path":"folders/sprites/inventario/cura.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

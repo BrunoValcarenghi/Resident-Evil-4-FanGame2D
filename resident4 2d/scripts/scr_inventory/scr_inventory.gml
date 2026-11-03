@@ -19,13 +19,18 @@ function inicial_inventario(){
 	add_inventario_item(3, [3,1])
 	
 	//para testes
-	add_inventario_item(1, [4,2])
-	add_inventario_item(2, [4,1])
-	add_inventario_item(2, [7,0])
-	add_inventario_item(2, [8,3])
-	add_inventario_item(2, [0,5])
-	add_inventario_item(3, [9,4])
-	add_inventario_item(3, [9,0])
+	//add_inventario_item(1, [4,2])
+	//add_inventario_item(2, [4,1])
+	//add_inventario_item(2, [7,0])
+	//add_inventario_item(2, [8,3])
+	//add_inventario_item(2, [0,5])
+	//add_inventario_item(3, [9,4])
+	//add_inventario_item(3, [9,0])
+	
+	//testes ervas
+	add_inventario_item(4, [4,2])
+	add_inventario_item(5, [6,2])
+	add_inventario_item(6, [8,2])
 
 }
 
@@ -167,11 +172,20 @@ function item_options(){
 }
 
 //parei aqui
-function draw_move_item(){
+function move_item(){
 
 	if move != noone {
 		
-		draw_sprite(global.itens[move].spr, 0, cursor[0]*distance + ow -3, cursor[1]*distance + oh - 3)
+		draw_set_alpha(.3)
+		draw_rectangle(
+			cursor[0]*distance + ow - 1,
+			cursor[1]*distance + oh - 1, 
+			cursor[0]*distance + ow + global.itens[move].size[0]*distance - 2, 
+			cursor[1]*distance + oh + global.itens[move].size[1]*distance - 2, 
+			0
+		)
+		draw_set_alpha(1)
+		draw_sprite(global.itens[move].spr, 0, cursor[0]*distance + ow -3, cursor[1]*distance + oh - 15)
 	
 		var _ocupado = false
 		for(var i = cursor[0]; i < cursor[0] + global.itens[move].size[0]; i++){
@@ -203,16 +217,6 @@ function draw_move_item(){
 			cursor[1] = old_y
 			exit
 		}
-		
-		draw_set_alpha(.3)
-		draw_rectangle(
-			cursor[0]*distance + ow, 
-			cursor[1]*distance + oh, 
-			cursor[0]*distance + global.itens[move].size[0]*distance + ow, 
-			cursor[1]*distance + oh + global.itens[move].size[1]*distance, 
-			0
-		)
-		draw_set_alpha(1)
 		
 	}
 	

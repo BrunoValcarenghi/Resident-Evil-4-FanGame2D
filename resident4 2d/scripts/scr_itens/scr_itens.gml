@@ -34,7 +34,7 @@ global.itens = [
 	{
 		nome: "9mm ammo",
 		size: [2, 1],
-		spr: spr_pistol_ammo,
+		spr: spr_ammo_pistol,
 		options: [o[0], o[3], o[4], o[5]]
 		
 	},
@@ -44,6 +44,46 @@ global.itens = [
 		size: [1, 2],
 		spr: spr_spray,
 		options: [o[0], o[2], o[4], o[5]]
+		
+	},
+	
+	{
+		nome: "Green herb",
+		size: [1, 2],
+		spr: spr_herb1,
+		options: [o[0], o[2], o[3], o[4], o[5]],
+		
+		herb: spr_mistura1
+		
+	},
+	
+	{
+		nome: "Yellow herb",
+		size: [1, 2],
+		spr: spr_herb2,
+		options: [o[0], o[3], o[4], o[5]],
+		
+		herb: spr_mistura2
+		
+	},
+	
+	{
+		nome: "Red herb",
+		size: [1, 2],
+		spr: spr_herb3,
+		options: [o[0], o[3], o[4], o[5]],
+		
+		herb: spr_mistura3
+		
+	},
+	
+	{
+		nome: "Mixed herbs",
+		size: [1, 2],
+		spr: spr_mistura_frasco,
+		options: [o[0], o[2], o[4], o[5]],
+		
+		herbs: []
 		
 	},
 
