@@ -29,8 +29,11 @@ function inicial_inventario(){
 	
 	//testes ervas
 	add_inventario_item(global.itens[4], [4,2])
+	add_inventario_item(global.itens[4], [5,2])
 	add_inventario_item(global.itens[5], [6,2])
+	add_inventario_item(global.itens[5], [7,2])
 	add_inventario_item(global.itens[6], [8,2])
+	add_inventario_item(global.itens[6], [9,2])
 
 }
 
@@ -46,10 +49,21 @@ function draw_grid(){
 			
 			if is_struct(_slot) {
 				draw_sprite(_slot.spr, 0, _ow, _oh)
+								
+				//for mixed_herbs
+				if variable_struct_exists(_slot, "herb") 
+				and is_array(_slot.herb){
+				
+					for(var _i = array_length(_slot.herb)-1; _i >= 0; _i--){
+				
+						draw_sprite(_slot.herb[_i], 0, _ow, _oh + sprite_get_height(_slot.spr) - _i*13)
+						
+					}
+			
+				}
+				
 			}
-			
-			
-			
+				
 			desenha_cursor()
 			//desenha_slot_ocupado()
 		
@@ -168,7 +182,7 @@ function item_options(){
 			
 			io_clear()
 			
-			combine  = global.inventory[cursor[0]][cursor[1]]
+			combine = global.inventory[cursor[0]][cursor[1]]
 			
 			old_x = cursor[0]
 			old_y = cursor[1]
@@ -264,25 +278,40 @@ function combine_item(){
 			}
 		}
 		
+		//herbs
 		if variable_struct_exists(combine, "herb"){
 		
 			if _ocupado 
 			and !is_array(global.inventory[cursor[0], cursor[1]]) 
-			and variable_struct_exists(global.inventory[cursor[0], cursor[1]], "herb"){
-			
+			and variable_struct_exists(global.inventory[cursor[0], cursor[1]], "herb")
+			and array_length(global.inventory[cursor[0], cursor[1]].herb) < 3{
+				
+				draw_set_colour(c_green)
+				
 				if keyboard_check_pressed(vk_enter) {
 					
 					var m1 = combine
 					var m2 = global.inventory[cursor[0], cursor[1]]
 					
-					add_inventario_item(global.itens[7], [cursor[0], cursor[1]])
+					if !is_array(global.inventory[cursor[0], cursor[1]].herb){
+						
+						add_inventario_item(global.itens[7], [cursor[0], cursor[1]])
+						global.inventory[cursor[0], cursor[1]].herb = [m1.herb, m2.herb]
+						
+					}
+					else{
+						
+						array_push(m2.herb, m1.herb)
 					
-					global.inventory[cursor[0], cursor[1]].herb = [m1.herb, m2.herb]
+					}
+					
+					if array_contains(global.inventory[cursor[0], cursor[1]].herb, spr_mistura1)
+					and !array_contains(global.inventory[cursor[0], cursor[1]].options, "Use")
+						array_insert(global.inventory[cursor[0], cursor[1]].options, 1, "Use")
 					
 					combine = noone
-					exit;
+					
 				}
-				draw_set_colour(c_green)
 		
 			}
 			else{
@@ -348,7 +377,7 @@ function add_inventario_item(_item, _slot){
 		}
 	}
 
-	global.inventory[_slot[0]][_slot[1]] = _item
+	global.inventory[_slot[0]][_slot[1]] = 	variable_clone(_item)
 
 }
 

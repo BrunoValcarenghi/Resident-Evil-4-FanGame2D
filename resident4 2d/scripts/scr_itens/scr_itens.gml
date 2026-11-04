@@ -96,9 +96,9 @@ global.itens = [
 		nome: "Mixed herbs",
 		size: [1, 2],
 		spr: spr_mistura_frasco,
-		options: [o[0], o[2], o[4], o[5]],
+		options: [o[0], o[4], o[5]],
 		
-		herbs: [],
+		herb: [],
 		
 		heal: 0,
 		
