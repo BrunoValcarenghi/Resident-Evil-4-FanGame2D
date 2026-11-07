@@ -24,10 +24,13 @@ global.itens = [
 	// 5-discard
 
 	{	
+		
 		type: "weapon",
 		nome: "Handgun",
 		size: [3, 2],
 		spr: spr_handgun,
+		orientation: 0,
+		margin: 0,
 		options: [o[0], o[1], o[4], o[5]]
 		
 	},
@@ -37,6 +40,8 @@ global.itens = [
 		nome: "9mm ammo",
 		size: [2, 1],
 		spr: spr_ammo_pistol,
+		orientation: 0,
+		margin: 0,
 		options: [o[0], o[3], o[4], o[5]]
 		
 	},
@@ -46,6 +51,8 @@ global.itens = [
 		nome: "Spray",
 		size: [1, 2],
 		spr: spr_spray,
+		orientation: 0,
+		margin: 0,
 		options: [o[0], o[2], o[4], o[5]],
 		
 		heal: 10
@@ -57,6 +64,8 @@ global.itens = [
 		nome: "Green herb",
 		size: [1, 2],
 		spr: spr_herb1,
+		orientation: 0,
+		margin: 0,
 		options: [o[0], o[2], o[3], o[4], o[5]],
 		
 		herb: spr_mistura1,
@@ -70,6 +79,8 @@ global.itens = [
 		nome: "Yellow herb",
 		size: [1, 2],
 		spr: spr_herb2,
+		orientation: 0,
+		margin: 0,
 		options: [o[0], o[3], o[4], o[5]],
 		
 		herb: spr_mistura2,
@@ -83,6 +94,8 @@ global.itens = [
 		nome: "Red herb",
 		size: [1, 2],
 		spr: spr_herb3,
+		orientation: 0,
+		margin: 0,
 		options: [o[0], o[3], o[4], o[5]],
 		
 		herb: spr_mistura3,
@@ -96,6 +109,8 @@ global.itens = [
 		nome: "Mixed herbs",
 		size: [1, 2],
 		spr: spr_mistura_frasco,
+		orientation: 0,
+		margin: 0,
 		options: [o[0], o[4], o[5]],
 		
 		herb: [],

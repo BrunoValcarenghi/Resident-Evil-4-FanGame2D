@@ -48,8 +48,9 @@ function draw_grid(){
 			 _slot = global.inventory[i][j]
 			
 			if is_struct(_slot) {
-				draw_sprite(_slot.spr, 0, _ow, _oh)
-								
+
+				draw_sprite_ext(_slot.spr, 0, _ow + _slot.margin, _oh, 1, 1, _slot.orientation, c_white, 1)
+				
 				//for mixed_herbs
 				if variable_struct_exists(_slot, "herb") 
 				and is_array(_slot.herb){
@@ -218,7 +219,8 @@ function move_item(){
 			0
 		)
 		draw_set_alpha(1)
-		draw_sprite(move.spr, 0, cursor[0]*distance + ow -3, cursor[1]*distance + oh - 15)
+		draw_sprite_ext(move.spr, 0, cursor[0]*distance + ow + move.margin, cursor[1]*distance + oh - 15, 1, 1, move.orientation, c_white, 1)
+		//draw_sprite(move.spr, 0, cursor[0]*distance + ow -3, cursor[1]*distance + oh - 15)
 	
 		var _ocupado = false
 		for(var i = cursor[0]; i < cursor[0] + move.size[0]; i++){
@@ -242,6 +244,8 @@ function move_item(){
 			draw_set_colour(c_red)
 		
 		}
+		
+		if keyboard_check_pressed(vk_backspace) rotate()
 		
 		if keyboard_check_pressed(vk_escape) {
 			add_inventario_item(move, [old_x, old_y])
@@ -525,5 +529,22 @@ function move_cursor(){
 		}
 	
 	}
+
+}
+	
+function rotate(){
+	
+	if move.orientation = 0  {
+		move.orientation = 270
+		move.margin = sprite_get_height(move.spr)
+	}
+	else {
+		move.orientation = 0
+		move.margin = 0
+	}
+	
+	var _ys = move.size[1]
+	move.size[1] =  move.size[0]
+	move.size[0] =  _ys
 
 }
