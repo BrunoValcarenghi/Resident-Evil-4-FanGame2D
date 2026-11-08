@@ -13,7 +13,7 @@ cursor_y = 0
 select_item = noone
 move = noone
 combine = noone
-
+_rotate = false
 
 zerar_inventario()
 

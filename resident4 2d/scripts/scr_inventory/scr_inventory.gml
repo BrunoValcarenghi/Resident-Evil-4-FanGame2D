@@ -37,6 +37,39 @@ function inicial_inventario(){
 
 }
 
+function draw_inventory_item(_slot, _x, _y){
+
+	if is_struct(_slot) {
+
+		draw_sprite_ext(_slot.spr, 0, _x + _slot.margin, _y, 1, 1, _slot.orientation, c_white, 1)
+		
+		//for mixed_herbs
+		if variable_struct_exists(_slot, "herb") 
+		and is_array(_slot.herb){
+		
+			for(var _i = array_length(_slot.herb)-1; _i >= 0; _i--){
+				
+				if _slot.orientation = 0{
+				
+					//draw_sprite(_slot.herb[_i], 0, _ow, _oh + sprite_get_height(_slot.spr) - _i*13)
+					draw_sprite_ext(_slot.herb[_i], 0, _x + _slot.margin, _y + sprite_get_height(_slot.spr) - _i*13, 1, 1, _slot.orientation, c_white, 1)
+					
+				}
+				else{
+				
+					draw_sprite_ext(_slot.herb[_i], 0, _x + _i*13, _y, 1, 1, _slot.orientation, c_white, 1)
+				
+				}
+				
+				
+				
+			}
+	
+		}
+		
+	}
+}
+
 function draw_grid(){
 	
 	for( i = 0; i < size[0]; i++){
@@ -47,23 +80,7 @@ function draw_grid(){
 			
 			 _slot = global.inventory[i][j]
 			
-			if is_struct(_slot) {
-
-				draw_sprite_ext(_slot.spr, 0, _ow + _slot.margin, _oh, 1, 1, _slot.orientation, c_white, 1)
-				
-				//for mixed_herbs
-				if variable_struct_exists(_slot, "herb") 
-				and is_array(_slot.herb){
-				
-					for(var _i = array_length(_slot.herb)-1; _i >= 0; _i--){
-				
-						draw_sprite(_slot.herb[_i], 0, _ow, _oh + sprite_get_height(_slot.spr) - _i*13)
-						
-					}
-			
-				}
-				
-			}
+			draw_inventory_item(_slot, _ow, _oh)
 				
 			desenha_cursor()
 			//desenha_slot_ocupado()
@@ -159,6 +176,7 @@ function item_options(){
 		case "Move": 
 				
 				io_clear()
+				_rotate = false
 				
 				move = global.inventory[cursor[0]][cursor[1]]
 				
@@ -219,7 +237,8 @@ function move_item(){
 			0
 		)
 		draw_set_alpha(1)
-		draw_sprite_ext(move.spr, 0, cursor[0]*distance + ow + move.margin, cursor[1]*distance + oh - 15, 1, 1, move.orientation, c_white, 1)
+		draw_inventory_item(move, cursor[0]*distance + ow, cursor[1]*distance + oh - 15)
+		//draw_sprite_ext(move.spr, 0, cursor[0]*distance + ow + move.margin, cursor[1]*distance + oh - 15, 1, 1, move.orientation, c_white, 1)
 		//draw_sprite(move.spr, 0, cursor[0]*distance + ow -3, cursor[1]*distance + oh - 15)
 	
 		var _ocupado = false
@@ -245,9 +264,15 @@ function move_item(){
 		
 		}
 		
-		if keyboard_check_pressed(vk_backspace) rotate()
+		
+		if keyboard_check_pressed(vk_backspace) {
+			rotate()
+			_rotate = !_rotate
+		}
 		
 		if keyboard_check_pressed(vk_escape) {
+			
+			if _rotate rotate()
 			add_inventario_item(move, [old_x, old_y])
 			move = noone
 			cursor[0] = old_x
