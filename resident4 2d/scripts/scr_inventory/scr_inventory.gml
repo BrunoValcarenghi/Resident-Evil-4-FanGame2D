@@ -34,6 +34,13 @@ function inicial_inventario(){
 	add_inventario_item(global.itens[5], [7,2])
 	add_inventario_item(global.itens[6], [8,2])
 	add_inventario_item(global.itens[6], [9,2])
+	
+	add_inventario_item(global.itens[4], [4,4])
+	add_inventario_item(global.itens[4], [5,4])
+	add_inventario_item(global.itens[5], [6,4])
+	add_inventario_item(global.itens[5], [7,4])
+	add_inventario_item(global.itens[6], [8,4])
+	add_inventario_item(global.itens[6], [9,4])
 
 }
 
@@ -309,15 +316,53 @@ function combine_item(){
 		
 		//herbs
 		if variable_struct_exists(combine, "herb"){
-		
+			
+			if keyboard_check_pressed(vk_escape) {
+				add_inventario_item(combine, [old_x, old_y])
+				combine = noone
+				cursor[0] = old_x
+				cursor[1] = old_y
+				exit
+			}
+			
+			draw_set_colour(c_red)
+			
 			if _ocupado 
 			and !is_array(global.inventory[cursor[0], cursor[1]]) 
 			and variable_struct_exists(global.inventory[cursor[0], cursor[1]], "herb")
 			and array_length(global.inventory[cursor[0], cursor[1]].herb) < 3{
 				
+				//só pode misturar se for
+				
+				//cores diferentes
+				//ou
+				//todas verdes
+				
+				if (
+					combine.herb != spr_mistura1 
+					and global.inventory[cursor[0], cursor[1]].herb = combine.herb
+				)
+				or (
+					combine.herb != spr_mistura1 
+					and is_array(global.inventory[cursor[0], cursor[1]].herb) 
+					and array_contains(global.inventory[cursor[0], cursor[1]].herb, combine.herb)
+				)
+				or(
+					combine.herb = spr_mistura1
+					and is_array(global.inventory[cursor[0], cursor[1]].herb)
+					and array_contains(global.inventory[cursor[0], cursor[1]].herb, spr_mistura1)
+					and (
+						array_contains(global.inventory[cursor[0], cursor[1]].herb, spr_mistura2)
+						or array_contains(global.inventory[cursor[0], cursor[1]].herb, spr_mistura3)
+					)
+				)
+				exit
+			
 				draw_set_colour(c_green)
 				
 				if keyboard_check_pressed(vk_enter) {
+					
+					//show_message(global.inventory[cursor[0], cursor[1]].herb)
 					
 					var m1 = combine
 					var m2 = global.inventory[cursor[0], cursor[1]]
@@ -343,20 +388,7 @@ function combine_item(){
 				}
 		
 			}
-			else{
-		
-				draw_set_colour(c_red)
-		
-			}
 			
-		}
-		
-		if keyboard_check_pressed(vk_escape) {
-			add_inventario_item(combine, [old_x, old_y])
-			combine = noone
-			cursor[0] = old_x
-			cursor[1] = old_y
-			exit
 		}
 		
 	}
