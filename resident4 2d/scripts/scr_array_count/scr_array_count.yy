@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_array_count",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_array_count",
+  "parent":{
+    "name":"functions",
+    "path":"folders/script/functions.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

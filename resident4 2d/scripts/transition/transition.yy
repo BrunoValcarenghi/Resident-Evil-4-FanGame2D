@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"transition",
   "parent":{
-    "name":"effects",
-    "path":"folders/script/effects.yy",
+    "name":"functions",
+    "path":"folders/script/functions.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

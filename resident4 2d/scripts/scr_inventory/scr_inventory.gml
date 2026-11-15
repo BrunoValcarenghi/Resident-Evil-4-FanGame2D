@@ -307,6 +307,14 @@ function combine_item(){
 
 	if combine != noone {
 		
+		if keyboard_check_pressed(vk_escape) {
+			add_inventario_item(combine, [old_x, old_y])
+			combine = noone
+			cursor[0] = old_x
+			cursor[1] = old_y
+			exit
+		}
+		
 		draw_set_alpha(.3)
 		draw_rectangle(
 			cursor[0]*distance + ow - 1,
@@ -327,14 +335,6 @@ function combine_item(){
 		
 		//herbs
 		if variable_struct_exists(combine, "herb"){
-			
-			if keyboard_check_pressed(vk_escape) {
-				add_inventario_item(combine, [old_x, old_y])
-				combine = noone
-				cursor[0] = old_x
-				cursor[1] = old_y
-				exit
-			}
 			
 			draw_set_colour(c_red)
 			
@@ -366,6 +366,14 @@ function combine_item(){
 						array_contains(global.inventory[cursor[0], cursor[1]].herb, spr_mistura2)
 						or array_contains(global.inventory[cursor[0], cursor[1]].herb, spr_mistura3)
 					)
+				)
+				or(
+					
+					combine.herb != spr_mistura1
+					and is_array(global.inventory[cursor[0], cursor[1]].herb)
+					and array_contains(global.inventory[cursor[0], cursor[1]].herb, spr_mistura1)
+					and array_count(global.inventory[cursor[0], cursor[1]].herb, spr_mistura1) = 2
+				
 				)
 				exit
 			
