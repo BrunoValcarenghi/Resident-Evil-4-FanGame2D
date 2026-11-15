@@ -17,3 +17,9 @@ function text_border(_x, _y, _text, b_color, _text_color, _outline_width) {
     draw_text(_x, _y, _text);
 	
 }
+
+function text_border_bw(_x, _y, _text){
+
+	text_border(_x, _y, _text, #49343d, #b3a999, 1)
+
+}

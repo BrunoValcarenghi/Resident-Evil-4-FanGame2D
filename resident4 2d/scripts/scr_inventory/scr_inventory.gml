@@ -68,10 +68,19 @@ function draw_inventory_item(_slot, _x, _y){
 				
 				}
 				
-				
-				
 			}
 	
+		}
+		else if variable_struct_exists(_slot, "ammo") {
+		
+			draw_set_valign(2)
+			draw_set_halign(2)
+			draw_set_font(f_menu)
+			
+			
+			text_border_bw(_x + distance*_slot.size[0] - 5, _y+ distance*_slot.size[1] - 2, _slot.ammo)
+		
+		
 		}
 		
 	}
@@ -95,8 +104,10 @@ function draw_grid(){
 		}
 	}
 	
+	draw_set_valign(0)
+	draw_set_halign(0)
 	_slot_cursor = global.inventory[cursor[0]][cursor[1]]
-	if is_struct(_slot_cursor) draw_text(64, 320, _slot_cursor.nome)
+	if is_struct(_slot_cursor) text_border_bw(64, 320, _slot_cursor.nome)
 
 }
 

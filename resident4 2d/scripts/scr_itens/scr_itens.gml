@@ -31,7 +31,10 @@ global.itens = [
 		spr: spr_handgun,
 		orientation: 0,
 		margin: 0,
-		options: [o[0], o[1], o[4], o[5]]
+		options: [o[0], o[1], o[4], o[5]],
+		
+		ammo: 10,
+		capacity: 10,
 		
 	},
 	
@@ -42,7 +45,10 @@ global.itens = [
 		spr: spr_ammo_pistol,
 		orientation: 0,
 		margin: 0,
-		options: [o[0], o[3], o[4], o[5]]
+		options: [o[0], o[3], o[4], o[5]],
+		
+		ammo: 50,
+		capacity: 50,
 		
 	},
 	

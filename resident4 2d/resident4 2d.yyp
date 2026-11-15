@@ -47,6 +47,7 @@
   "resources":[
     {"id":{"name":"f_big","path":"fonts/f_big/f_big.yy",},},
     {"id":{"name":"f_border","path":"fonts/f_border/f_border.yy",},},
+    {"id":{"name":"f_menu","path":"fonts/f_menu/f_menu.yy",},},
     {"id":{"name":"f_nicoclean","path":"fonts/f_nicoclean/f_nicoclean.yy",},},
     {"id":{"name":"f_nicopaint","path":"fonts/f_nicopaint/f_nicopaint.yy",},},
     {"id":{"name":"f_small","path":"fonts/f_small/f_small.yy",},},
