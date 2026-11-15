@@ -28,20 +28,27 @@ function inicial_inventario(){
 	//add_inventario_item(global.itens[3], [9,0])
 	
 	//testes ervas
-	add_inventario_item(global.itens[4], [4,2])
-	add_inventario_item(global.itens[4], [5,2])
-	add_inventario_item(global.itens[5], [6,2])
-	add_inventario_item(global.itens[5], [7,2])
-	add_inventario_item(global.itens[6], [8,2])
-	add_inventario_item(global.itens[6], [9,2])
+	//add_inventario_item(global.itens[4], [4,2])
+	//add_inventario_item(global.itens[4], [5,2])
+	//add_inventario_item(global.itens[5], [6,2])
+	//add_inventario_item(global.itens[5], [7,2])
+	//add_inventario_item(global.itens[6], [8,2])
+	//add_inventario_item(global.itens[6], [9,2])
+	//
+	//add_inventario_item(global.itens[4], [4,4])
+	//add_inventario_item(global.itens[4], [5,4])
+	//add_inventario_item(global.itens[5], [6,4])
+	//add_inventario_item(global.itens[5], [7,4])
+	//add_inventario_item(global.itens[6], [8,4])
+	//add_inventario_item(global.itens[6], [9,4])
 	
-	add_inventario_item(global.itens[4], [4,4])
-	add_inventario_item(global.itens[4], [5,4])
-	add_inventario_item(global.itens[5], [6,4])
-	add_inventario_item(global.itens[5], [7,4])
-	add_inventario_item(global.itens[6], [8,4])
-	add_inventario_item(global.itens[6], [9,4])
-
+	//testar municao
+	add_inventario_item(global.itens[2], [5,1])
+	add_inventario_item(global.itens[2], [7,1])
+	add_inventario_item(global.itens[2], [5,2])
+	add_inventario_item(global.itens[2], [7,2])
+	global.inventory[7,2].ammo = 10
+	
 }
 
 function draw_inventory_item(_slot, _x, _y){
@@ -77,10 +84,8 @@ function draw_inventory_item(_slot, _x, _y){
 			draw_set_halign(2)
 			draw_set_font(f_menu)
 			
-			
 			text_border_bw(_x + distance*_slot.size[0] - 5, _y+ distance*_slot.size[1] - 2, _slot.ammo)
-		
-		
+			
 		}
 		
 	}
@@ -324,7 +329,8 @@ function combine_item(){
 			0
 		)
 		draw_set_alpha(1)
-		draw_sprite(combine.spr, 0, cursor[0]*distance + ow -3, cursor[1]*distance + oh - 15)
+		//draw_sprite(combine.spr, 0, cursor[0]*distance + ow -3, cursor[1]*distance + oh - 15)
+		draw_inventory_item(combine, cursor[0]*distance + ow -3, cursor[1]*distance + oh - 15)
 	
 		var _ocupado = false
 		for(var i = cursor[0]; i < cursor[0] + combine.size[0]; i++){
@@ -333,13 +339,13 @@ function combine_item(){
 			}
 		}
 		
+		draw_set_colour(c_red)
+		
 		//herbs
 		if variable_struct_exists(combine, "herb"){
 			
-			draw_set_colour(c_red)
-			
 			if _ocupado 
-			and !is_array(global.inventory[cursor[0], cursor[1]]) 
+			and is_struct(global.inventory[cursor[0], cursor[1]]) 
 			and variable_struct_exists(global.inventory[cursor[0], cursor[1]], "herb")
 			and array_length(global.inventory[cursor[0], cursor[1]].herb) < 3{
 				
@@ -408,6 +414,31 @@ function combine_item(){
 		
 			}
 			
+		}
+		else if combine.type = "ammo"{
+		
+			if _ocupado 
+			and is_struct(global.inventory[cursor[0], cursor[1]]) 
+			and global.inventory[cursor[0], cursor[1]].nome = combine.nome{
+				
+				if global.inventory[cursor[0], cursor[1]].ammo = global.inventory[cursor[0], cursor[1]].capacity exit
+				
+				draw_set_colour(c_green)
+				
+				if keyboard_check_pressed(vk_enter) {
+					
+					var a1 = global.inventory[cursor[0], cursor[1]].ammo
+					global.inventory[cursor[0], cursor[1]].ammo = combine.ammo 
+
+					add_inventario_item(combine, [old_x, old_y])
+					global.inventory[old_x, old_y].ammo = a1
+					
+					combine = noone
+					
+				}
+				
+			}
+		
 		}
 		
 	}
