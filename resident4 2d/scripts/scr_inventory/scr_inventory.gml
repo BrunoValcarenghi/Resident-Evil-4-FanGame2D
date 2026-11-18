@@ -45,9 +45,20 @@ function inicial_inventario(){
 	//testar municao
 	add_inventario_item(global.itens[2], [5,0])
 	add_inventario_item(global.itens[2], [7,0])
-	add_inventario_item(global.itens[2], [5,1])
-	add_inventario_item(global.itens[2], [7,1])
-	global.inventory[7,1].ammo = 10
+	add_inventario_item(global.itens[2], [4,1])
+	add_inventario_item(global.itens[2], [6,1])
+	global.inventory[6,1].ammo = 10
+	
+	add_inventario_item(global.itens[2])
+	add_inventario_item(global.itens[3])
+	add_inventario_item(global.itens[2])
+	add_inventario_item(global.itens[2])
+	add_inventario_item(global.itens[2])
+	add_inventario_item(global.itens[2])
+	add_inventario_item(global.itens[2])
+
+	add_inventario_item(global.itens[3])
+
 	
 }
 
@@ -480,9 +491,51 @@ function desenha_slot_ocupado(){
 	
 }
 
-function add_inventario_item(_item, _slot){
-
+//inventario cheio nao add item
+function add_inventario_item(_item, _slot = noone){
+	
 	var _size = _item.size
+	
+	if _slot = noone{
+		
+		var _ocupado = false
+		
+		for(var i = 0; i < size[0]; i++){
+			for(var j = 0; j < size[1]; j++){
+				
+				_ocupado = false
+				
+				for(var ii = i; ii < i + _size[0]; ii++){
+					for(var jj = j; jj < j + _size[1]; jj++){
+						
+						if jj >= size[1] or ii >= size[0]{
+							_ocupado = true
+							break			
+						}
+
+						if global.inventory[ii][jj] != 0 _ocupado = true
+						
+						if _ocupado break
+					
+					}
+					if _ocupado break
+				}
+				
+				if !_ocupado{
+				
+					_slot[0] = i
+					_slot[1] = j
+					break
+				
+				}
+				
+			}
+			if !_ocupado break
+		}
+	
+	}
+	
+	if _slot = noone show_message("a")
 	
 	for(var i = _slot[0]; i < _slot[0]+_size[0]; i++){
 		for(var j = _slot[1]; j < _slot[1]+_size[1]; j++){
@@ -490,7 +543,7 @@ function add_inventario_item(_item, _slot){
 		}
 	}
 
-	global.inventory[_slot[0]][_slot[1]] = 	variable_clone(_item)
+	global.inventory[_slot[0]][_slot[1]] = variable_clone(_item)
 
 }
 
