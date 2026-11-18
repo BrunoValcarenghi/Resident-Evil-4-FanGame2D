@@ -181,10 +181,10 @@ function draw_select_item(){
 
 }
 
-function remove_item(_item){
+function remove_item(_item, _x = cursor[0], _y = cursor[1]){
 	
-	for(var i = old_x; i < old_x + _item.size[0]; i++){
-		for(var j = old_y; j < old_y + _item.size[1]; j++){
+	for(var i = _x; i < _x + _item.size[0]; i++){
+		for(var j = _y; j < _y + _item.size[1]; j++){
 			global.inventory[i][j] = 0
 		}
 	}
@@ -193,12 +193,12 @@ function remove_item(_item){
 
 //falta coisa aqui
 function item_options(){
-
+	
+	io_clear()
 	switch select_item.options[option]{
-			
+		
 		case "Move": 
 				
-				io_clear()
 				_rotate = false
 				
 				move = global.inventory[cursor[0]][cursor[1]]
@@ -208,7 +208,7 @@ function item_options(){
 				
 				//global.inventory[cursor[0]][cursor[1]] = 0
 	
-				remove_item(move)
+				remove_item(move, old_x, old_y)
 			
 			break;
 		
@@ -222,14 +222,12 @@ function item_options(){
 		
 		case "Combine": 
 			
-			io_clear()
-			
 			combine = global.inventory[cursor[0]][cursor[1]]
 			
 			old_x = cursor[0]
 			old_y = cursor[1]
 			
-			remove_item(combine)
+			remove_item(combine, old_x, old_y)
 			
 			break;
 		
@@ -238,7 +236,10 @@ function item_options(){
 			break;
 		
 		case "Discard": 
-			show_message("5")
+			
+			//opção de confirmar
+			
+			remove_item(global.inventory[cursor[0]][cursor[1]])
 			break;
 		
 	}
@@ -305,7 +306,7 @@ function move_item(){
 	
 }
 
-//por enquanto so combina ervas
+//por enquanto so combina ervas e municao
 function combine_item(){
 
 	if combine != noone {
