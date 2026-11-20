@@ -14,6 +14,7 @@ select_item = noone
 move = noone
 combine = noone
 _rotate = false
+discard = noone
 
 zerar_inventario()
 

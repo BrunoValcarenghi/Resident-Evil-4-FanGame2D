@@ -132,6 +132,7 @@ function seleciona_itens(){
 	if keyboard_check_pressed(vk_enter) 
 	and move = noone
 	and combine = noone
+	and discard = noone
 	and is_struct(global.inventory[cursor[0]][cursor[1]]){
 	
 		if select_item = noone and is_struct(global.inventory[cursor[0]][cursor[1]]){
@@ -147,6 +148,9 @@ function seleciona_itens(){
 	if keyboard_check_pressed(vk_escape) {
 		if select_item != noone {
 			select_item = noone
+		}
+		if discard != noone{
+			discard = noone
 		}
 	
 	}
@@ -173,17 +177,19 @@ function draw_select_item(){
 		
 		}
 		
-		if keyboard_check_pressed(vk_up) or keyboard_check_pressed(ord("W")) {
+		if discard = noone{
+			if keyboard_check_pressed(vk_up) or keyboard_check_pressed(ord("W")) {
 			
-			if option <= 0 option = array_length(_slot.options)-1
-			else option --
+				if option <= 0 option = array_length(_slot.options)-1
+				else option --
 
-		}
-		if keyboard_check_pressed(vk_down) or keyboard_check_pressed(ord("S")) {
+			}
+			if keyboard_check_pressed(vk_down) or keyboard_check_pressed(ord("S")) {
 			
-			if option >= array_length(_slot.options)-1 option = 0
-			else option ++
+				if option >= array_length(_slot.options)-1 option = 0
+				else option ++
 			
+			}
 		}
 	
 	}
@@ -248,14 +254,60 @@ function item_options(){
 		
 		case "Discard": 
 			
-			//opção de confirmar
+			discard = global.inventory[cursor[0]][cursor[1]]
+			_option_discard = false
+			exit //para nao pegar o select_item noone
 			
-			remove_item(global.inventory[cursor[0]][cursor[1]])
 			break;
 		
 	}
 	
 	select_item = noone
+
+}
+
+function draw_discard(){
+	
+	if discard = noone exit
+	
+	var _slot = select_item
+		
+	var _xx = cursor_x + sprite_get_width(_slot.spr)
+	
+	var _position = array_get_index(_slot.options, "Discard")
+	
+	var _yy = cursor_y + 8 + 18 * _position
+	
+	draw_set_alpha(.8)
+	draw_set_colour(c_black)
+	draw_rectangle(_xx+92, _yy, _xx+200, _yy + 18, 0) 
+	
+	var _cor_sim = c_gray
+	var _cor_nao = c_white
+	if _option_discard{
+	
+		_cor_sim = c_white
+		_cor_nao = c_gray
+	
+	}
+	
+	if keyboard_check_pressed(vk_left) or keyboard_check_pressed(vk_right)
+	or keyboard_check_pressed(ord("A")) or keyboard_check_pressed(ord("D"))
+		_option_discard = !_option_discard
+	
+	draw_set_colour(_cor_sim)
+	draw_text(_xx + 97, _yy - 2, "Yes")
+	draw_set_colour(_cor_nao)
+	draw_text(_xx + 132, _yy - 2, "No")
+	
+	if keyboard_check_pressed(vk_enter){
+	
+		if _option_discard remove_item(discard)
+		
+		select_item = noone
+		discard = noone
+	
+	}
 
 }
 
