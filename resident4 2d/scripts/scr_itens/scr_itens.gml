@@ -27,6 +27,7 @@ global.itens = [
 		
 		type: "weapon",
 		nome: "Handgun",
+		desc: "A standard 9mm handgun.",
 		size: [3, 2],
 		spr: spr_handgun,
 		orientation: 0,
@@ -40,7 +41,8 @@ global.itens = [
 	
 	{	
 		type: "ammo",
-		nome: "9mm ammo",
+		nome: "Handgun Ammo",
+		desc: "A box of 9mm rounds.",
 		size: [2, 1],
 		spr: spr_ammo_pistol,
 		orientation: 0,
@@ -54,7 +56,8 @@ global.itens = [
 	
 	{	
 		type: "heal",
-		nome: "Spray",
+		nome: "First Aid Spray",
+		desc: "Completely restores health.",
 		size: [1, 2],
 		spr: spr_spray,
 		orientation: 0,
@@ -68,6 +71,7 @@ global.itens = [
 	{	
 		type: "heal",
 		nome: "Green herb",
+		desc: "Herb that restores partial health.",
 		size: [1, 2],
 		spr: spr_herb1,
 		orientation: 0,
@@ -83,6 +87,7 @@ global.itens = [
 	{	
 		type: "heal",
 		nome: "Yellow herb",
+		desc: "Mixing it with a Green Herb will increase your maximum health.",
 		size: [1, 2],
 		spr: spr_herb2,
 		orientation: 0,
@@ -98,6 +103,7 @@ global.itens = [
 	{	
 		type: "heal",
 		nome: "Red herb",
+		desc: "Mixing it with a Green Herb will completely restore health.",
 		size: [1, 2],
 		spr: spr_herb3,
 		orientation: 0,
@@ -113,6 +119,7 @@ global.itens = [
 	{	
 		type: "heal",
 		nome: "Mixed herbs",
+		desc: "A mixture of herbs. Restores health significantly.",
 		size: [1, 2],
 		spr: spr_mistura_frasco,
 		orientation: 0,

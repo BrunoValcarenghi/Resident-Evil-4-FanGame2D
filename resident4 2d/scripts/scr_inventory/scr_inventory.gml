@@ -133,6 +133,7 @@ function seleciona_itens(){
 	and move = noone
 	and combine = noone
 	and discard = noone
+	and examine = noone
 	and is_struct(global.inventory[cursor[0]][cursor[1]]){
 	
 		if select_item = noone and is_struct(global.inventory[cursor[0]][cursor[1]]){
@@ -165,9 +166,11 @@ function draw_select_item(){
 		
 		var _xx = cursor_x + sprite_get_width(_slot.spr)
 		
+		var _yy = array_length(_slot.options) * 18
+		
 		draw_set_alpha(.8)
 		draw_set_colour(c_black)
-		draw_rectangle(_xx, cursor_y, _xx+90, cursor_y + 100, 0) 
+		draw_rectangle(_xx, cursor_y, _xx+90, cursor_y + _yy + 10, 0) 
 		
 		for(var i = 0; i < array_length(_slot.options); i++){
 			
@@ -249,16 +252,17 @@ function item_options(){
 			break;
 		
 		case "Examine": 
-			show_message("4")
+			
+			examine = global.inventory[cursor[0]][cursor[1]]
+			
 			break;
+
 		
 		case "Discard": 
 			
 			discard = global.inventory[cursor[0]][cursor[1]]
 			_option_discard = false
 			exit //para nao pegar o select_item noone
-			
-			break;
 		
 	}
 	
@@ -308,6 +312,53 @@ function draw_discard(){
 		discard = noone
 	
 	}
+
+}
+
+function draw_examine(){
+	
+	if examine = noone exit
+
+	draw_set_colour(#574749)
+	draw_set_alpha(.5)
+	draw_rectangle(0, 0, room_width, room_height, 0)
+	draw_set_colour(c_black)
+	draw_set_alpha(.5)
+	draw_rectangle(0, 0, room_width, room_height, 0)
+		
+	draw_set_alpha(1)
+	
+	draw_set_colour(#49343d)
+	draw_rectangle(0, room_height/3 * 2, room_width, room_height, 0)
+	
+	draw_set_colour(#6d574f)
+	draw_rectangle(0, room_height/3 * 2, room_width, room_height/3 * 2 - 10, 0)
+	draw_set_colour(#8a6f5b)
+	draw_rectangle(0, room_height/3 * 2 - 2, room_width, room_height/3 * 2 - 8, 0)
+	
+	draw_set_colour(#6d574f)
+	draw_rectangle(0, room_height - 10, room_width, room_height, 0)
+	draw_set_colour(#8a6f5b)
+	draw_rectangle(0, room_height - 8, room_width, room_height - 3, 0)
+	
+	text_border_bw(80, room_height/3 * 2 + 5, examine.nome)
+	text_border_bw(70, room_height/3 * 2 + 23, examine.desc)
+	
+	var _tamanho = 1.5
+	
+	draw_sprite_ext(
+		examine.spr, 
+		0, 
+		room_width/2 - sprite_get_width(examine.spr)*_tamanho/2, 
+		room_height/3 - sprite_get_height(examine.spr)*_tamanho/2,
+		_tamanho,
+		_tamanho,
+		0,
+		c_white,
+		1
+	)
+	
+	if keyboard_check_pressed(vk_enter) or keyboard_check_pressed(vk_escape) examine = noone
 
 }
 

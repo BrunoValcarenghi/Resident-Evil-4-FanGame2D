@@ -15,6 +15,7 @@ move = noone
 combine = noone
 _rotate = false
 discard = noone
+examine = noone
 
 zerar_inventario()
 
